@@ -2,18 +2,11 @@ require 'tmpdir'
 require 'shellwords'
 require 'rbconfig'
 require 'yaml'
-ARGV.reject! {|i| i == "--"}
-Dir.glob('**/tasks.rake').each {|r| import r}
+ARGV.delete("--")
+Dir.glob('**/tasks.rake').each {|r| load r }
 
-ENV["COMPOSE_YAMLS"] = ENV["COMPOSE_YAMLS"] || "-f docker-compose.yml"
-ENV["UP_OPTIONS"]    = ENV["UP_OPTIONS"]    || "--build --remove-orphans"
-
-COMPOSE_YAMLS = ENV["COMPOSE_YAMLS"]
-UP_OPTIONS    = ENV["UP_OPTIONS"]
-
-###############################################################################
-###############################################################################
-###############################################################################
+COMPOSE_YAMLS = "-f docker-compose.yml"    unless defined? COMPOSE_YAMLS
+UP_OPTIONS    = "--build --remove-orphans" unless defined? UP_OPTIONS
 
 task :default do
   system('rake -sT')
@@ -66,7 +59,6 @@ def execute_ossh(commands, method)
   result = true
   case os = RbConfig::CONFIG['host_os']
   when /mswin|cygwin/
-    ENV.each {|k,v| commands.unshift "set #{k}=#{e}"}
     case method
     when 0
       commands.push "@%WINDIR%\\SYSTEM32\\TIMEOUT /T 10"
