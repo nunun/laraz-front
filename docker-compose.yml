@@ -1,0 +1,27 @@
+version: '3'
+services:
+  web:
+    image: nunun/laraz-react
+    build: ./
+    environment:
+      - DOT_ENV=.env.laraz
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./testapp:/var/www/html
+    ports:
+      - "18080:80"
+
+  mysql:
+    restart: always
+    image: mysql:latest
+    environment:
+        - "MYSQL_DATABASE=laravel"
+        - "MYSQL_ROOT_PASSWORD=hogehoge"
+    volumes:
+        - mysql_data:/var/lib/mysql
+    ports:
+      - "13306:3306"
+
+volumes:
+  mysql_data:
+

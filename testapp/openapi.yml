@@ -1,0 +1,52 @@
+swagger: '2.0'
+info:
+  title: TestAPI
+  version: 1.0.0
+  license:
+    name: MIT
+host: localhost
+basePath: /v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /auth/regist:
+    post:
+      summary: 新しいユーザの登録
+      operationId: regist
+      tags:
+        - auth
+      parameters:
+        - name: username
+          description: ユーザ名
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ユーザ登録成功
+          schema: { $ref: '#/definitions/AccessToken' }
+        default:
+          description: 不明なエラー
+          schema: { $ref: '#/definitions/Error' }
+
+definitions:
+  AccessToken:
+    required: [ token, expire ]
+    properties:
+      token:
+        type: string
+      expire:
+        type: integer
+  Error:
+    required: [ code, message ]
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
