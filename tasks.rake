@@ -32,3 +32,19 @@ task :npm do
   ossh! "docker-compose #{COMPOSE_YAMLS} run --rm web npm #{args}"
   exit
 end
+
+desc "execute npm run dev command on web container"
+task :assets do
+  ARGV.shift; args = ARGV.join(' ')
+  ossh! "docker-compose #{COMPOSE_YAMLS} run --rm web npm run dev #{args}"
+  exit
+end
+
+namespace :assets do
+  desc "execute npm run watch command on web container"
+  task :watch do
+    ARGV.shift; args = ARGV.join(' ')
+    ossh! "docker-compose #{COMPOSE_YAMLS} run --rm web npm run watch #{args}"
+    exit
+  end
+end

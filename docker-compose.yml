@@ -1,8 +1,7 @@
 version: '3'
 services:
   web:
-    image: nunun/laraz-react
-    build: ./
+    image: nunun/laraz
     environment:
       - DOT_ENV=.env.laraz
       - TZ=Asia/Tokyo

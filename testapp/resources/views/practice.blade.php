@@ -7,7 +7,14 @@
 
     <title>Practice</title>
 
-    {{-- css and js --}}
+    {{-- Application --}}
+    <link rel="stylesheet" href="css/app.css"/>
+    <script type="text/javascript">
+        window.Laravel = window.Laravel || {};
+        window.Laravel.csrfToken = "{{csrf_token()}}";
+    </script>
+
+    {{-- MaterializeCSS --}}
     {!! MaterializeCSS::include_full() !!}
 </head>
 <body>
@@ -38,10 +45,15 @@ please see <a href="http://materializecss.com/">document</a> of materialize-css.
     </div>
 </div>
 
+<div id="app">
+    <example></example>
+    @{{ message }}
+</div>
+
 {{-- js --}}
 <script type="text/javascript">
     $('.carousel.carousel-slider').carousel({fullWidth:true});
 </script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
